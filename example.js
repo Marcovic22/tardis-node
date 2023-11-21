@@ -29,7 +29,11 @@ async function produceVolumeBasedTradeBars(messages) {
   }
 }
 
-await produceVolumeBasedTradeBars(historicalMessages)
+(async () => {
+  await produceVolumeBasedTradeBars(historicalMessages);
+  // Uncomment the next line if you want to run it for real time data as well
+  // await produceVolumeBasedTradeBars(realTimeMessages);
+})();
 
 // or for real time data
 //  await produceVolumeBasedTradeBars(realTimeMessages)
