@@ -1,4 +1,4 @@
-const { streamNormalized, normalizeBookChanges, combine, 
+const { streamNormalized, normalizeBookChanges, combine, getExchangeDetails,
     compute, computeBookSnapshots } = require('tardis-dev')
 
 async function processMessages() {
@@ -9,6 +9,9 @@ const exchangesToStream = [
 { exchange: 'coinbase', symbols: ['BTC-USD'] },
 { exchange: 'binance', symbols: ['ETHBTC'] }
 ]
+
+const e = await getExchangeDetails('coinbase')
+console.log(e)
 
 // for each specified exchange call streamNormalized for it
 // so we have multiple real-time streams for all specified exchanges
