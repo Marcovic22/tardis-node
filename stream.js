@@ -1,21 +1,25 @@
 
-const { replay } = require('tardis-dev')
+const tardis = require('tardis-dev')
+const { streamNormalized, normalizeTrades, normalizeBookChanges } = tardis
 
 async function processMessages() {
   
-  const messages = replay({
-    exchange: 'bitmex',
-    filters: [
-      { channel: 'trade', symbols: ['BTCUSD'] },
-      { channel: 'orderBookL2', symbols: ['BTCUSD'] }
-    ],
-    from: '2023-11-05',
-    to: '2023-11-06',
-    apiKey: 'TD.ihqPR7ggqdD-9pr1.BUSOetaxJ7XYe7O.SSzbiH9KgWteJIn.GqRxaXhpenVxb0t.6l-z3ud6YtTHyWD.inN6'
-  })
+  const messages = streamNormalized(
+    {
+      exchange: 'bitmex',
+      symbols: ['ETHUSD']
+    },
+    normalizeBookChanges
+  )
+
+  console.log(JSON.stringify(await messages));
 
   for await (const message of messages) {
     console.log(message);
+
+    console.log(JSON.stringify(message));
+
+
   }
 }
 
