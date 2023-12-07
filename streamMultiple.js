@@ -3,14 +3,14 @@ const { streamNormalized, normalizeBookChanges, combine, getExchangeDetails,
 
 async function processMessages() {
 const exchangesToStream = [
-{ exchange: 'bitmex', symbols: ['ETHUSD'] },
+{ exchange: 'dydx', symbols: ['BTC-USD'] },
 { exchange: 'deribit', symbols: ['BTC-PERPETUAL'] },
 { exchange: 'cryptofacilities', symbols: ['PI_XBTUSD'] },
 { exchange: 'coinbase', symbols: ['BTC-USD'] },
-{ exchange: 'binance', symbols: ['ETHBTC'] }
+{ exchange: 'binance', symbols: ['btcbusd'] }
 ]
 
-const e = await getExchangeDetails('coinbase')
+const e = await getExchangeDetails('dydx')
 console.log(e)
 
 // for each specified exchange call streamNormalized for it
@@ -48,7 +48,8 @@ if (message.type === 'book_snapshot') {
 spreads[message.exchange] = {
   spread: message.asks[0].price - message.bids[0].price,
   bestBid: message.bids[0],
-  bestAsk: message.asks[0]
+  bestAsk: message.asks[0],
+  timeStamp: message.localTimestamp
 }
 }
 }
